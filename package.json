@@ -1,29 +1,35 @@
 {
   "name": "react-native-starter-stack",
   "version": "1.0.0",
-  "main": "App.tsx",
+  "main": "expo-router/entry",
   "scripts": {
     "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
-    "web": "expo start --web"
+    "start:android": "expo start --android",
+    "start:ios": "expo start --ios",
+    "start:web": "expo start --web"
   },
   "dependencies": {
-    "expo": "~53.0.20",
-    "expo-constants": "~17.1.7",
-    "expo-linking": "~7.1.7",
-    "expo-router": "~5.1.4",
-    "expo-status-bar": "~2.2.3",
-    "react": "19.0.0",
-    "react-native": "0.79.5",
+    "expo": "54.0.0-preview.0",
+    "expo-constants": "~18.0.0",
+    "expo-linking": "~8.0.0",
+    "expo-router": "~6.0.0-beta.0",
+    "expo-status-bar": "~3.0.0",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "react-native": "0.81.0",
     "react-native-reanimated": "^4.0.2",
-    "react-native-safe-area-context": "5.4.0",
-    "react-native-screens": "~4.11.1"
+    "react-native-safe-area-context": "5.6.0",
+    "react-native-screens": "4.14.0-nightly-20250803-1df3db25a",
+    "react-native-worklets": "^0.4.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.25.2",
-    "@types/react": "~19.0.10",
-    "typescript": "~5.8.3"
+    "@babel/core": "^7.28.3",
+    "@types/react": "^19.1.10",
+    "typescript": "^5.9.2"
+  },
+  "overrides": {
+    "react": "19.1.0",
+    "react-dom": "19.1.0"
   },
   "private": true
 }
