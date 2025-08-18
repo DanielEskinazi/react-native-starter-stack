@@ -38,9 +38,27 @@ export default function Index() {
       <Text style={styles.subtitle}>Ready for development!</Text>
       <Text style={styles.hint}>👆 Tap the title to test Reanimated!</Text>
 
-      <Link href="/about" style={styles.link}>
-        <Text style={styles.linkText}>Go to About</Text>
-      </Link>
+      <View style={styles.navigation}>
+        <Link href="/about" style={styles.link}>
+          <Text style={styles.linkText}>Go to About</Text>
+        </Link>
+        
+        <Link href="/gestures" style={[styles.link, styles.gestureLink]}>
+          <Text style={styles.linkText}>🎮 Test Gestures</Text>
+        </Link>
+
+        <Link href="/zustand" style={[styles.link, styles.zustandLink]}>
+          <Text style={styles.linkText}>🐻 Test Zustand</Text>
+        </Link>
+
+        <Link href="/storage" style={[styles.link, styles.storageLink]}>
+          <Text style={styles.linkText}>📦 Test AsyncStorage</Text>
+        </Link>
+
+        <Link href="/gradients" style={[styles.link, styles.gradientLink]}>
+          <Text style={styles.linkText}>🌈 Test Linear Gradients</Text>
+        </Link>
+      </View>
     </SafeAreaView>
   );
 }
@@ -71,15 +89,33 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontStyle: 'italic',
   },
-  link: {
+  navigation: {
     marginTop: 30,
+    gap: 15,
+    alignItems: 'center',
+  },
+  link: {
     padding: 15,
     backgroundColor: '#007AFF',
     borderRadius: 8,
+    minWidth: 160,
+  },
+  gestureLink: {
+    backgroundColor: '#FF6B35',
+  },
+  zustandLink: {
+    backgroundColor: '#8B5A3C',
+  },
+  storageLink: {
+    backgroundColor: '#6A4C93',
+  },
+  gradientLink: {
+    backgroundColor: '#FF6B6B',
   },
   linkText: {
     color: '#fff',
     fontWeight: 'bold',
     fontSize: 16,
+    textAlign: 'center',
   },
 });

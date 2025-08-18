@@ -9,18 +9,23 @@
     "start:web": "expo start --web"
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "2.2.0",
+    "@tanstack/react-query": "^5.85.3",
     "expo": "54.0.0-preview.0",
     "expo-constants": "~18.0.0",
+    "expo-linear-gradient": "~15.0.2",
     "expo-linking": "~8.0.0",
     "expo-router": "~6.0.0-beta.0",
     "expo-status-bar": "~3.0.0",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-native": "0.81.0",
-    "react-native-reanimated": "^4.0.2",
+    "react-native-gesture-handler": "~2.28.0",
+    "react-native-reanimated": "~4.0.2",
     "react-native-safe-area-context": "5.6.0",
     "react-native-screens": "4.14.0-nightly-20250803-1df3db25a",
-    "react-native-worklets": "^0.4.1"
+    "react-native-worklets": "^0.4.1",
+    "zustand": "^5.0.7"
   },
   "devDependencies": {
     "@babel/core": "^7.28.3",
