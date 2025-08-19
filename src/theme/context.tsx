@@ -9,7 +9,7 @@ import React, { createContext, useContext, useEffect, useState, useCallback, Rea
 import { Appearance, ColorSchemeName } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Theme, ThemeConfig, ThemeContextValue } from './types';
-import { createTheme } from './index';
+import { createTheme } from './theme';
 
 // ===== CONSTANTS =====
 

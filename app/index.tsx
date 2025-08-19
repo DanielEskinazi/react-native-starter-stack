@@ -113,6 +113,14 @@ export default function Index() {
           </Text>
         </TouchableOpacity>
 
+        <Link href="/components" style={styles.link}>
+          <Text style={styles.linkText}>🎨 Component Library</Text>
+        </Link>
+
+        <Link href="/input-test" style={[styles.link, styles.gestureLink]}>
+          <Text style={styles.linkText}>⌨️ Input Test</Text>
+        </Link>
+
         <Link href="/about" style={styles.link}>
           <Text style={styles.linkText}>Go to About</Text>
         </Link>

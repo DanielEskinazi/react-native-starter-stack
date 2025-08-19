@@ -10,6 +10,8 @@ export default function Layout() {
         <ThemeProvider>
           <Stack>
             <Stack.Screen name="index" options={{ title: 'Home' }} />
+            <Stack.Screen name="components" options={{ title: 'Component Library' }} />
+            <Stack.Screen name="input-test" options={{ title: 'Input Test' }} />
             <Stack.Screen name="about" options={{ title: 'About' }} />
             <Stack.Screen name="gestures" options={{ title: 'Gestures Test' }} />
             <Stack.Screen name="zustand" options={{ title: 'Zustand State Management' }} />
