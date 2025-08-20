@@ -38,6 +38,74 @@ export { Divider } from './layout/Divider';
 export { Alert } from './feedback/Alert';
 export { Spinner } from './feedback/Spinner';
 
+// ===== ANIMATION COMPONENTS =====
+export {
+  // Animation constants and types
+  ANIMATION_DURATION,
+  SPRING_CONFIG,
+  GESTURE_THRESHOLDS,
+  INTERPOLATION_CONFIG,
+  SCALE_VALUES,
+  LAYOUT_ANIMATION,
+  SCROLL_ANIMATION,
+  LOADING_ANIMATION,
+  MODAL_ANIMATION,
+  
+  // Animation hooks
+  usePressAnimation,
+  useFadeIn,
+  useSlideIn,
+  useScrollAnimation,
+  useVelocityGesture,
+  useKeyboardAnimation,
+  useReducedMotion,
+  useLoadingAnimation,
+  useMultiGesture,
+  
+  // Demo components
+  PressAnimationDemo,
+  LoadingAnimationDemo,
+  EntranceAnimationDemo,
+  SwipeGestureDemo,
+  MultiTouchDemo,
+  LayoutAnimationDemo,
+  
+  // Production-ready examples
+  SwipeableListItem,
+  AnimatedModal,
+  ParallaxScrollView,
+  ParallaxLayerBackground,
+  ParallaxLayerElements,
+  ParallaxFloatingElement,
+  
+  // Reanimated utilities
+  useSharedValue,
+  useAnimatedStyle,
+  useAnimatedScrollHandler,
+  useDerivedValue,
+  useAnimatedReaction,
+  withSpring,
+  withTiming,
+  withDelay,
+  withSequence,
+  withDecay,
+  withRepeat,
+  interpolate,
+  Extrapolation,
+  runOnJS,
+  cancelAnimation,
+  Gesture,
+  GestureDetector,
+  
+  // Helper utilities
+  createSpringAnimation,
+  createTimingAnimation,
+  createStaggeredAnimation,
+  interpolateWithEasing,
+  shouldReduceMotion,
+  triggerHapticFeedback,
+} from './animations';
+
 // ===== COMPONENT PROP TYPES =====
 export type { BoxProps } from './base/Box';
 export type { TextProps } from './base/Text';
@@ -50,6 +118,20 @@ export type { CardProps } from './layout/Card';
 export type { DividerProps } from './layout/Divider';
 export type { AlertProps } from './feedback/Alert';
 export type { SpinnerProps } from './feedback/Spinner';
+
+// ===== ANIMATION COMPONENT TYPES =====
+export type {
+  AnimationDuration,
+  SpringConfig,
+  GestureThreshold,
+  SwipeableListItemProps,
+  SwipeAction,
+  AnimatedModalProps,
+  AnimatedModalRef,
+  ModalAnimationType,
+  ParallaxScrollViewProps,
+  ParallaxLayer,
+} from './animations';
 
 // ===== RE-EXPORT THEME UTILITIES FOR COMPONENT USAGE =====
 export {

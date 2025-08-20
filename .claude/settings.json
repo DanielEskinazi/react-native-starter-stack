@@ -16,25 +16,30 @@
     ],
     "deny": []
   },
+  "statusLine": {
+    "type": "command",
+    "command": "uv run .claude/status_lines/status_line.py",
+    "padding": 0
+  },
   "hooks": {
-    // "PreToolUse": [
-    //   {
-    //     "matcher": "",
-    //     "hooks": [
-    //       {
-    //         "type": "command",
-    //         "command": "uv run .claude/hooks/pre_tool_use.py"
-    //       }
-    //     ]
-    //   }
-    // ],
+    "PreToolUse": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "uv run .claude/hooks/pre_tool_use.py"
+          }
+        ]
+      }
+    ],
     "PostToolUse": [
       {
         "matcher": "",
         "hooks": [
           {
             "type": "command",
-            "command": "uv run /Users/dany/Documents/CODE/github.com/mindlessmenus/.claude/hooks/post_tool_use.py"
+            "command": "uv run .claude/hooks/post_tool_use.py"
           }
         ]
       }
@@ -45,7 +50,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "uv run /Users/dany/Documents/CODE/github.com/mindlessmenus/.claude/hooks/notification.py --notify"
+            "command": "uv run .claude/hooks/notification.py --notify"
           }
         ]
       }
@@ -56,7 +61,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "uv run /Users/dany/Documents/CODE/github.com/mindlessmenus/.claude/hooks/stop.py --chat"
+            "command": "uv run .claude/hooks/stop.py --chat"
           }
         ]
       }
@@ -67,7 +72,28 @@
         "hooks": [
           {
             "type": "command",
-            "command": "uv run /Users/dany/Documents/CODE/github.com/mindlessmenus/.claude/hooks/subagent_stop.py"
+            "command": "uv run .claude/hooks/subagent_stop.py --notify"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "uv run .claude/hooks/user_prompt_submit.py --log-only --store-last-prompt --name-agent"
+          }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "uv run .claude/hooks/pre_compact.py"
           }
         ]
       }

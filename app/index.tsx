@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View, ScrollView } from "react-native";
 import { Link } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Animated, {
@@ -15,12 +15,19 @@ export default function Index() {
   const rotate = useSharedValue(0);
 
   const styles = createThemedStyles(theme, (t) => ({
-    container: {
+    safeArea: {
       flex: 1,
       backgroundColor: t.colors.background.primary,
+    },
+    scrollContainer: {
+      flex: 1,
+    },
+    container: {
+      flexGrow: 1,
       alignItems: "center" as const,
       justifyContent: "center" as const,
       paddingHorizontal: t.spacing.md,
+      paddingBottom: t.spacing.xl,
     },
     title: {
       ...t.typography.variants.heading.h2,
@@ -96,51 +103,62 @@ export default function Index() {
   };
 
   return (
-    <SafeAreaView style={styles.container} edges={["top", "left", "right"]}>
-      <TouchableOpacity onPress={handlePress}>
-        <Animated.Text style={[styles.title, animatedStyle]}>
-          🚀 React Native Starter Stack
-        </Animated.Text>
-      </TouchableOpacity>
-
-      <Text style={styles.subtitle}>Ready for development!</Text>
-      <Text style={styles.hint}>👆 Tap the title to test Reanimated!</Text>
-
-      <View style={styles.navigation}>
-        <TouchableOpacity style={styles.themeToggle} onPress={toggleMode}>
-          <Text style={styles.linkText}>
-            {theme.mode === "light" ? "🌙 Dark Mode" : "☀️ Light Mode"}
-          </Text>
+    <SafeAreaView style={styles.safeArea} edges={["top", "left", "right"]}>
+      <ScrollView 
+        style={styles.scrollContainer}
+        contentContainerStyle={styles.container}
+        showsVerticalScrollIndicator={true}
+        bounces={true}
+      >
+        <TouchableOpacity onPress={handlePress}>
+          <Animated.Text style={[styles.title, animatedStyle]}>
+            🚀 React Native Starter Stack
+          </Animated.Text>
         </TouchableOpacity>
 
-        <Link href="/components" style={styles.link}>
-          <Text style={styles.linkText}>🎨 Component Library</Text>
-        </Link>
+        <Text style={styles.subtitle}>Ready for development!</Text>
+        <Text style={styles.hint}>👆 Tap the title to test Reanimated!</Text>
 
-        <Link href="/input-test" style={[styles.link, styles.gestureLink]}>
-          <Text style={styles.linkText}>⌨️ Input Test</Text>
-        </Link>
+        <View style={styles.navigation}>
+          <TouchableOpacity style={styles.themeToggle} onPress={toggleMode}>
+            <Text style={styles.linkText}>
+              {theme.mode === "light" ? "🌙 Dark Mode" : "☀️ Light Mode"}
+            </Text>
+          </TouchableOpacity>
 
-        <Link href="/about" style={styles.link}>
-          <Text style={styles.linkText}>Go to About</Text>
-        </Link>
+          <Link href="/components" style={styles.link}>
+            <Text style={styles.linkText}>🎨 Component Library</Text>
+          </Link>
 
-        <Link href="/gestures" style={[styles.link, styles.gestureLink]}>
-          <Text style={styles.linkText}>🎮 Test Gestures</Text>
-        </Link>
+          <Link href="/input-test" style={[styles.link, styles.gestureLink]}>
+            <Text style={styles.linkText}>⌨️ Input Test</Text>
+          </Link>
 
-        <Link href="/zustand" style={[styles.link, styles.zustandLink]}>
-          <Text style={styles.linkText}>🐻 Test Zustand</Text>
-        </Link>
+          <Link href="/about" style={styles.link}>
+            <Text style={styles.linkText}>Go to About</Text>
+          </Link>
 
-        <Link href="/storage" style={[styles.link, styles.storageLink]}>
-          <Text style={styles.linkText}>📦 Test AsyncStorage</Text>
-        </Link>
+          <Link href="/gestures" style={[styles.link, styles.gestureLink]}>
+            <Text style={styles.linkText}>🎮 Test Gestures</Text>
+          </Link>
 
-        <Link href="/gradients" style={[styles.link, styles.gradientLink]}>
-          <Text style={styles.linkText}>🌈 Test Linear Gradients</Text>
-        </Link>
-      </View>
+          <Link href="/zustand" style={[styles.link, styles.zustandLink]}>
+            <Text style={styles.linkText}>🐻 Test Zustand</Text>
+          </Link>
+
+          <Link href="/storage" style={[styles.link, styles.storageLink]}>
+            <Text style={styles.linkText}>📦 Test AsyncStorage</Text>
+          </Link>
+
+          <Link href="/gradients" style={[styles.link, styles.gradientLink]}>
+            <Text style={styles.linkText}>🌈 Test Linear Gradients</Text>
+          </Link>
+
+          <Link href="/animations" style={styles.link}>
+            <Text style={styles.linkText}>🎬 Animations Showcase</Text>
+          </Link>
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
