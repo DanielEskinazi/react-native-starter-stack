@@ -3,6 +3,7 @@
 # dependencies
 node_modules/
 
+.mcp.json
 # logs
 /logs
 /logs*
@@ -39,3 +40,4 @@ yarn-error.*
 
 # typescript
 *.tsbuildinfo
+.env
