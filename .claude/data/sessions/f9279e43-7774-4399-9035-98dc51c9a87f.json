@@ -1,0 +1,20 @@
+{
+  "session_id": "f9279e43-7774-4399-9035-98dc51c9a87f",
+  "prompts": [
+    "we got some animations in our @src/components/animations/ that aren't working properly. when i click a button on the `Press Feedback` animation, it crashes the app. can we maybe add some logs and help me figure out how to debug this? ",
+    "i cant seem to scroll down on the animation page [Image #1]",
+    "these animation buttons are huge, can u make the selection a lot smaller? [Image #1]",
+    "there is still that huge container [Image #1]",
+    "I can't read this screen very well \u007f, please fix text [Image #1]",
+    "can u add a way to scroll down on the layout page",
+    "i meant this page: [Image #1]",
+    "what's this massive white space? [Image #1]",
+    "i still see a massive white space, please make it smaller [Image #1] it should be no bigger than a small margin after the buttons",
+    "I don't konw how but this is still showing that massive whitespace [Image #1]",
+    "how is it possible that the whitespace is back!? i see it still.. its like coming back [Image #1]",
+    "still there... super weird [Image #1]",
+    "[Image #1]",
+    "better? [Image #1] but still to much whitespace"
+  ],
+  "agent_name": "Vertex"
+}

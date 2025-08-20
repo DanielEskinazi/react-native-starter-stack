@@ -1,18 +1,93 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { Link } from 'expo-router';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import Animated, { useSharedValue, useAnimatedStyle, withSpring, withSequence } from 'react-native-reanimated';
+import { StyleSheet, Text, TouchableOpacity, View, ScrollView } from "react-native";
+import { Link } from "expo-router";
+import { SafeAreaView } from "react-native-safe-area-context";
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withSpring,
+  withSequence,
+} from "react-native-reanimated";
+import { useTheme, createThemedStyles } from "../src/theme";
 
 export default function Index() {
+  const { theme, toggleMode } = useTheme();
   const scale = useSharedValue(1);
   const rotate = useSharedValue(0);
 
+  const styles = createThemedStyles(theme, (t) => ({
+    safeArea: {
+      flex: 1,
+      backgroundColor: t.colors.background.primary,
+    },
+    scrollContainer: {
+      flex: 1,
+    },
+    container: {
+      flexGrow: 1,
+      alignItems: "center" as const,
+      justifyContent: "center" as const,
+      paddingHorizontal: t.spacing.md,
+      paddingBottom: t.spacing.xl,
+    },
+    title: {
+      ...t.typography.variants.heading.h2,
+      color: t.colors.text.primary,
+      textAlign: "center" as const,
+    },
+    subtitle: {
+      ...t.typography.variants.body.large,
+      color: t.colors.text.secondary,
+      textAlign: "center" as const,
+      marginTop: t.spacing.md,
+    },
+    hint: {
+      ...t.typography.variants.body.small,
+      color: t.colors.colors.primary[600],
+      textAlign: "center" as const,
+      fontStyle: "italic" as const,
+      marginTop: t.spacing.sm,
+    },
+    navigation: {
+      marginTop: t.spacing.xl,
+      gap: t.spacing.md,
+      alignItems: "center" as const,
+    },
+    link: {
+      padding: t.spacing.md,
+      backgroundColor: t.colors.colors.primary[500],
+      borderRadius: t.borderRadius.md,
+      minWidth: 160,
+      ...t.shadows.small,
+    },
+    themeToggle: {
+      padding: t.spacing.md,
+      backgroundColor: t.colors.colors.secondary[500],
+      borderRadius: t.borderRadius.md,
+      minWidth: 160,
+      ...t.shadows.small,
+    },
+    gestureLink: {
+      backgroundColor: t.colors.colors.secondary[500],
+    },
+    zustandLink: {
+      backgroundColor: t.colors.colors.warning[600],
+    },
+    storageLink: {
+      backgroundColor: t.colors.colors.success[600],
+    },
+    gradientLink: {
+      backgroundColor: t.colors.colors.error[500],
+    },
+    linkText: {
+      ...t.typography.variants.button,
+      color: t.colors.text.inverse,
+      textAlign: "center" as const,
+    },
+  }));
+
   const animatedStyle = useAnimatedStyle(() => {
     return {
-      transform: [
-        { scale: scale.value },
-        { rotateZ: `${rotate.value}deg` }
-      ],
+      transform: [{ scale: scale.value }, { rotateZ: `${rotate.value}deg` }],
     };
   });
 
@@ -28,94 +103,62 @@ export default function Index() {
   };
 
   return (
-    <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
-      <TouchableOpacity onPress={handlePress}>
-        <Animated.Text style={[styles.title, animatedStyle]}>
-          🚀 React Native Starter Stack
-        </Animated.Text>
-      </TouchableOpacity>
-      
-      <Text style={styles.subtitle}>Ready for development!</Text>
-      <Text style={styles.hint}>👆 Tap the title to test Reanimated!</Text>
+    <SafeAreaView style={styles.safeArea} edges={["top", "left", "right"]}>
+      <ScrollView 
+        style={styles.scrollContainer}
+        contentContainerStyle={styles.container}
+        showsVerticalScrollIndicator={true}
+        bounces={true}
+      >
+        <TouchableOpacity onPress={handlePress}>
+          <Animated.Text style={[styles.title, animatedStyle]}>
+            🚀 React Native Starter Stack
+          </Animated.Text>
+        </TouchableOpacity>
 
-      <View style={styles.navigation}>
-        <Link href="/about" style={styles.link}>
-          <Text style={styles.linkText}>Go to About</Text>
-        </Link>
-        
-        <Link href="/gestures" style={[styles.link, styles.gestureLink]}>
-          <Text style={styles.linkText}>🎮 Test Gestures</Text>
-        </Link>
+        <Text style={styles.subtitle}>Ready for development!</Text>
+        <Text style={styles.hint}>👆 Tap the title to test Reanimated!</Text>
 
-        <Link href="/zustand" style={[styles.link, styles.zustandLink]}>
-          <Text style={styles.linkText}>🐻 Test Zustand</Text>
-        </Link>
+        <View style={styles.navigation}>
+          <TouchableOpacity style={styles.themeToggle} onPress={toggleMode}>
+            <Text style={styles.linkText}>
+              {theme.mode === "light" ? "🌙 Dark Mode" : "☀️ Light Mode"}
+            </Text>
+          </TouchableOpacity>
 
-        <Link href="/storage" style={[styles.link, styles.storageLink]}>
-          <Text style={styles.linkText}>📦 Test AsyncStorage</Text>
-        </Link>
+          <Link href="/components" style={styles.link}>
+            <Text style={styles.linkText}>🎨 Component Library</Text>
+          </Link>
 
-        <Link href="/gradients" style={[styles.link, styles.gradientLink]}>
-          <Text style={styles.linkText}>🌈 Test Linear Gradients</Text>
-        </Link>
-      </View>
+          <Link href="/input-test" style={[styles.link, styles.gestureLink]}>
+            <Text style={styles.linkText}>⌨️ Input Test</Text>
+          </Link>
+
+          <Link href="/about" style={styles.link}>
+            <Text style={styles.linkText}>Go to About</Text>
+          </Link>
+
+          <Link href="/gestures" style={[styles.link, styles.gestureLink]}>
+            <Text style={styles.linkText}>🎮 Test Gestures</Text>
+          </Link>
+
+          <Link href="/zustand" style={[styles.link, styles.zustandLink]}>
+            <Text style={styles.linkText}>🐻 Test Zustand</Text>
+          </Link>
+
+          <Link href="/storage" style={[styles.link, styles.storageLink]}>
+            <Text style={styles.linkText}>📦 Test AsyncStorage</Text>
+          </Link>
+
+          <Link href="/gradients" style={[styles.link, styles.gradientLink]}>
+            <Text style={styles.linkText}>🌈 Test Linear Gradients</Text>
+          </Link>
+
+          <Link href="/animations" style={styles.link}>
+            <Text style={styles.linkText}>🎬 Animations Showcase</Text>
+          </Link>
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: 20,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  subtitle: {
-    marginTop: 15,
-    fontSize: 16,
-    color: '#666',
-    textAlign: 'center',
-  },
-  hint: {
-    marginTop: 8,
-    fontSize: 14,
-    color: '#007AFF',
-    textAlign: 'center',
-    fontStyle: 'italic',
-  },
-  navigation: {
-    marginTop: 30,
-    gap: 15,
-    alignItems: 'center',
-  },
-  link: {
-    padding: 15,
-    backgroundColor: '#007AFF',
-    borderRadius: 8,
-    minWidth: 160,
-  },
-  gestureLink: {
-    backgroundColor: '#FF6B35',
-  },
-  zustandLink: {
-    backgroundColor: '#8B5A3C',
-  },
-  storageLink: {
-    backgroundColor: '#6A4C93',
-  },
-  gradientLink: {
-    backgroundColor: '#FF6B6B',
-  },
-  linkText: {
-    color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 16,
-    textAlign: 'center',
-  },
-});

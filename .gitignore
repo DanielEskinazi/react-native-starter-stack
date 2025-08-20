@@ -3,6 +3,11 @@
 # dependencies
 node_modules/
 
+.mcp.json
+# logs
+/logs
+/logs*
+
 # Expo
 .expo/
 dist/
@@ -35,3 +40,4 @@ yarn-error.*
 
 # typescript
 *.tsbuildinfo
+.env
