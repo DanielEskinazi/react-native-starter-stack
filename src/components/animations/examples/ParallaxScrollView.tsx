@@ -75,9 +75,18 @@ export const ParallaxScrollView: React.FC<ParallaxScrollViewProps> = ({
   const scrollY = useSharedValue(0);
   const headerScrollThreshold = headerHeight - stickyHeaderHeight - insets.top;
 
+  // Add debug logging
+  console.log('[ParallaxScrollView] Debug values:', {
+    headerHeight,
+    stickyHeaderHeight,
+    insetsTop: insets.top,
+    headerScrollThreshold,
+  });
+
   const scrollHandler = useAnimatedScrollHandler({
     onScroll: (event) => {
       scrollY.value = event.contentOffset.y;
+      console.log('[ParallaxScrollView] Scroll Y:', event.contentOffset.y);
       if (onScroll) {
         onScroll(event.contentOffset.y);
       }
@@ -140,25 +149,27 @@ export const ParallaxScrollView: React.FC<ParallaxScrollViewProps> = ({
     };
   });
 
-  // Sticky header reveal
+  // Sticky header reveal - only show after significant scroll
   const stickyHeaderStyle = useAnimatedStyle(() => {
+    const showThreshold = Math.max(headerScrollThreshold, 100); // Ensure minimum scroll distance
     const opacity = interpolate(
       scrollY.value,
-      [headerScrollThreshold - 50, headerScrollThreshold],
+      [showThreshold - 20, showThreshold + 20],
       [0, 1],
       Extrapolation.CLAMP
     );
 
     const translateY = interpolate(
       scrollY.value,
-      [headerScrollThreshold - 50, headerScrollThreshold],
-      [-20, 0],
+      [showThreshold - 20, showThreshold + 20],
+      [-40, 0],
       Extrapolation.CLAMP
     );
 
     return {
       opacity,
       transform: [{ translateY }],
+      display: opacity < 0.01 ? 'none' : 'flex', // Hide completely when not needed
     };
   });
 
@@ -179,16 +190,9 @@ export const ParallaxScrollView: React.FC<ParallaxScrollViewProps> = ({
     });
   }, [headerHeight]);
 
-  // Content reveal animation
+  // Content reveal animation - make sure content is always visible
   const contentStyle = useAnimatedStyle(() => {
-    const opacity = interpolate(
-      scrollY.value,
-      [-50, 0, 50],
-      [0.8, 1, 1],
-      Extrapolation.CLAMP
-    );
-
-    return { opacity };
+    return { opacity: 1 }; // Keep content fully visible for now
   });
 
   return (
@@ -220,6 +224,7 @@ export const ParallaxScrollView: React.FC<ParallaxScrollViewProps> = ({
 
         {/* Main Content */}
         <Animated.View style={[styles.content, contentStyle]}>
+          {console.log('[ParallaxScrollView] Rendering content with children:', !!children)}
           {children}
         </Animated.View>
       </Animated.ScrollView>
@@ -345,7 +350,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
   content: {
-    backgroundColor: 'transparent',
+    backgroundColor: '#FFFFFF', // Make background visible for debugging
     minHeight: screenHeight,
     zIndex: 10,
   },

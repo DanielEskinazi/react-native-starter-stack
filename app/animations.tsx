@@ -33,7 +33,13 @@ import {
   AnimatedModal,
   AnimatedModalRef,
 } from "../src/components/animations/examples/AnimatedModal";
-import { ParallaxScrollView } from "../src/components/animations/examples/ParallaxScrollView";
+import Animated, { 
+  useSharedValue, 
+  useAnimatedStyle, 
+  useAnimatedScrollHandler,
+  interpolate,
+  Extrapolation
+} from 'react-native-reanimated';
 
 type DemoSection =
   | "overview"
@@ -52,6 +58,147 @@ interface DemoCategory {
   component?: React.ComponentType<any>;
   color: string;
 }
+
+// Simple working parallax demo
+const SimpleParallaxDemo: React.FC = () => {
+  const theme = useCurrentTheme();
+  const scrollY = useSharedValue(0);
+
+  const scrollHandler = useAnimatedScrollHandler((event) => {
+    scrollY.value = event.contentOffset.y;
+  });
+
+  // Header that fades out as you scroll
+  const headerStyle = useAnimatedStyle(() => {
+    const opacity = interpolate(
+      scrollY.value,
+      [0, 150],
+      [1, 0],
+      Extrapolation.CLAMP
+    );
+
+    const translateY = interpolate(
+      scrollY.value,
+      [0, 150],
+      [0, -50],
+      Extrapolation.CLAMP
+    );
+
+    return {
+      opacity,
+      transform: [{ translateY }],
+    };
+  });
+
+  // Background that moves slower (parallax effect)
+  const backgroundStyle = useAnimatedStyle(() => {
+    const translateY = interpolate(
+      scrollY.value,
+      [0, 300],
+      [0, -100], // Moves slower than scroll
+      Extrapolation.CLAMP
+    );
+
+    return {
+      transform: [{ translateY }],
+    };
+  });
+
+  return (
+    <Box style={{ flex: 1, position: 'relative' }}>
+      {/* Background Layer - moves slower */}
+      <Animated.View
+        style={[
+          {
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            height: 200,
+            backgroundColor: theme.colors.colors.primary[500],
+            zIndex: 1,
+          },
+          backgroundStyle,
+        ]}
+      />
+
+      {/* Header Text - fades out */}
+      <Animated.View
+        style={[
+          {
+            position: 'absolute',
+            top: 60,
+            left: 0,
+            right: 0,
+            zIndex: 3,
+            alignItems: 'center',
+          },
+          headerStyle,
+        ]}
+      >
+        <Text style={{ color: 'white', fontSize: 24, fontWeight: 'bold' }}>
+          🌄 Parallax Demo
+        </Text>
+        <Text style={{ color: 'white', fontSize: 16, marginTop: 8 }}>
+          Scroll to see the magic! ✨
+        </Text>
+      </Animated.View>
+
+      {/* Scrollable Content */}
+      <Animated.ScrollView
+        onScroll={scrollHandler}
+        scrollEventThrottle={16}
+        style={{ flex: 1, zIndex: 2 }}
+        contentContainerStyle={{ paddingTop: 150 }}
+      >
+        <Box style={{ backgroundColor: 'white', minHeight: 600, padding: 20 }}>
+          <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 10 }}>
+            📱 Scroll Content
+          </Text>
+          <Text style={{ marginBottom: 20 }}>
+            As you scroll, notice how the blue background moves slower than this content - that's the parallax effect!
+          </Text>
+
+          {Array.from({ length: 10 }, (_, i) => (
+            <Box
+              key={i}
+              style={{
+                backgroundColor: theme.colors.colors.primary[50],
+                padding: 16,
+                marginBottom: 16,
+                borderRadius: 8,
+              }}
+            >
+              <Text style={{ fontWeight: 'bold' }}>Content Item {i + 1}</Text>
+              <Text style={{ color: theme.colors.text.secondary }}>
+                {i === 0 && "👆 Look at the header - it's fading out!"}
+                {i === 3 && "🎭 The background is moving slower than this text"}
+                {i === 6 && "✨ This is the parallax effect in action!"}
+                {i !== 0 && i !== 3 && i !== 6 && "Keep scrolling to see more effects..."}
+              </Text>
+            </Box>
+          ))}
+
+          <Box
+            style={{
+              backgroundColor: theme.colors.colors.success[100],
+              padding: 20,
+              borderRadius: 12,
+              alignItems: 'center',
+            }}
+          >
+            <Text style={{ fontSize: 18, fontWeight: 'bold', color: theme.colors.colors.success[700] }}>
+              🎉 Great job!
+            </Text>
+            <Text style={{ textAlign: 'center', marginTop: 8, color: theme.colors.colors.success[600] }}>
+              You've experienced the parallax effect! The header faded out and the background moved at a different speed than the content.
+            </Text>
+          </Box>
+        </Box>
+      </Animated.ScrollView>
+    </Box>
+  );
+};
 
 export default function AnimationsScreen() {
   const theme = useCurrentTheme();
@@ -345,27 +492,7 @@ export default function AnimationsScreen() {
           </Text>
 
           <Card style={styles.parallaxPreview}>
-            <ParallaxScrollView
-              headerTitle="Parallax Header"
-              headerSubtitle="Scroll to see the parallax effect"
-              headerHeight={200}
-              backgroundColor={theme.colors.background.primary}
-              style={styles.parallaxContainer}
-            >
-              <Box padding="lg">
-                <Text variant="body" size="medium">
-                  This is content that scrolls normally while the header has a
-                  parallax effect. The header fades out and scales as you
-                  scroll.
-                </Text>
-
-                {Array.from({ length: 10 }, (_, i) => (
-                  <Card key={i} padding="md" style={styles.parallaxCard}>
-                    <Text>Scroll content item {i + 1}</Text>
-                  </Card>
-                ))}
-              </Box>
-            </ParallaxScrollView>
+            <SimpleParallaxDemo />
           </Card>
         </Box>
       </Box>
@@ -601,11 +728,16 @@ const styles = StyleSheet.create({
     minWidth: 100,
   },
   parallaxPreview: {
-    height: 300,
+    height: 400, // Increased height for better parallax effect
     overflow: "hidden",
   },
   parallaxContainer: {
     flex: 1,
+  },
+  parallaxIntro: {
+    marginBottom: 16,
+    fontStyle: 'italic',
+    textAlign: 'center',
   },
   parallaxCard: {
     marginBottom: 12,
